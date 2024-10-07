@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent any
     options {
         skipStagesAfterUnstable()
     }
@@ -8,6 +8,7 @@ pipeline {
             agent {
                 docker {
                     image 'python:3.11.5-alpine3.18'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock' // Montar el socket de Docker si es necesario
                 }
             }
             steps {
@@ -19,6 +20,7 @@ pipeline {
             agent {
                 docker {
                     image 'qnib/pytest'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock' // Montar el socket de Docker si es necesario
                 }
             }
             steps {
